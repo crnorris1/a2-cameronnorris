@@ -1,4 +1,46 @@
 body {
-  background:black;
+  background:rgb(102, 40, 40);
   color:white;
 }
+
+button {
+  font-family: 'Raleway';
+  flex: 1; 
+  padding: 4px;
+  font-size: 16px;
+}
+
+input {
+  font-family: 'Raleway';
+  flex: 3; 
+  padding: 4px;
+  font-size: 16px;
+}
+
+h1{
+  font-family: 'Grenze Gotisch';
+  color:white;
+}
+
+h2,h3,p,pre{
+  font-family: 'Raleway';
+  color:white;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center; 
+  gap: 3px;
+}
+
+div{
+  font-family: 'Raleway';
+  color:white;
+}
+
+#table, th, td {
+  font-family: 'Raleway';
+  border:2px solid rgb(255, 255, 255);
+  padding: 10px;
+}
+

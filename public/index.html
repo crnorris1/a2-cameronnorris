@@ -3,16 +3,47 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
+    <script src="/server.improved.js"></script>
     <script src="js/main.js"></script>
+    
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=Mrs+Sheppards&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <h1>Guitar Database</h1>
+    <h3>Enter a guitar model, its color, and the year it was made</h3>
+    <pre>Ex. "Gibson-SG            Cherry-Red         1961" (Only use spaces to indicate a different field of input)</pre> 
+    <div class="flex-container">
+      <input type="text" id="yourname" value="guitar-model color year">
+      <button id="button">submit</button>
+    </div>
+    <br>
+    <div class="flex-container">
+      <input type="text" id="removeText" value="which row to remove?">
+      <button id="removeButton">remove</button>
+    </div>
+    <br>
+    <p>Because guitars can get a new finish, you can change the color listed of a guitar in the database.</p>
+    <p>Enter the row of the guitar you'd like to change and the color you'd like to replace it with. (Ex. "2 Yellow")</p>
+    <div class="flex-container">
+      <input type="text" id="changeText" value="which guitar color to change?">
+      <button id="changeButton">change color</button>
+    </div>
+    <hr>
+    <table id="table"></table>
+
+   
+    
+    
   </body>
 </html>

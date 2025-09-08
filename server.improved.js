@@ -8,17 +8,19 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
+  }
+  else if (request.method === "DELETE"){
+    handleDelete(request, response);
+  }
+  else if (request.method === "PATCH"){
+    handlePatch(request, response);
   }
 })
 
@@ -27,13 +29,26 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }
+  else if (request.url === "/data"){
+    response.writeHead(200, {"Content-Type": "application/json"});
+    response.end(JSON.stringify(appdata));
+  }
+  else{
     sendFile( response, filename )
   }
 }
 
 const handlePost = function( request, response ) {
   let dataString = ""
+
+  let url = request.url.slice( 1 ) 
+  if (url == "/submit"){
+    //do something with data
+  }
+  else if (url == "/update"){
+    //do something else with data
+  }
 
   request.on( "data", function( data ) {
       dataString += data 
@@ -44,9 +59,59 @@ const handlePost = function( request, response ) {
 
     // ... do something with the data here!!!
 
+    appdata.push(JSON.parse( dataString ));
+
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(appdata))
   })
+}
+
+const handleDelete = function(request, response){
+  console.log("deleteHandle");
+  let dataString = "";
+
+  request.on("data", chunk => {
+    dataString += chunk;
+  });
+
+  request.on("end", () => {
+    let parsed = JSON.parse(dataString);   
+    let index = Number(parsed.index);
+    index = index - 1;
+
+    appdata.splice(index, 1);              
+    response.end("deleted");
+  });
+
+  response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+  response.end(JSON.stringify(appdata))
+}
+
+const handlePatch = function(request, response){
+  let dataString = "";
+  console.log("patchHandle");
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+    const json = JSON.parse(dataString);
+    const row = json.row;
+    const color = json.color;
+
+    let index = parseInt(json.row);
+    index = index - 1;
+
+    if (appdata[index]) {
+      appdata[index].color = json.color;
+    }
+    
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify(appdata))
+  })
+
+  
 }
 
 const sendFile = function( response, filename ) {
@@ -72,3 +137,4 @@ const sendFile = function( response, filename ) {
 }
 
 server.listen( process.env.PORT || port )
+ 

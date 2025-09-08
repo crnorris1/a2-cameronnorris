@@ -7,21 +7,110 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  //alert("submit worked")
 
-  const response = await fetch( "/submit", {
+  const input = document.querySelector( "#yourname").value,
+        fields = input.split(" ");
+        //json = { "yourname": input.value }, //take data from input
+        json = {model: fields[0], color: fields[1], year: fields[2], age: 2025-fields[2]};
+        body = JSON.stringify( json ); //turn it into a string
+
+  if (isNaN(Number(fields[2]))) {
+    alert("Invalid year field for " + fields[0]);
+    json = {model: fields[0], color: fields[1], year: fields[2], age: "??"};
+    body = JSON.stringify( json );
+  }
+  else if (fields[2] > 2025){
+    alert("Impossible guitar: built after 2025");
+  }
+
+  //alert(input.value);
+  const response = await fetch( "/submit", { //wait until i get something back from fetch (dont continue until server responds)
     method:"POST",
     body 
+  })//.then (function(reponse){return response.text();})
+  //.then (function(text){console.log("text:", text);}) 
+
+  fetchArray();
+}
+
+const deleteFunction = async function( event ){
+
+  const input = document.querySelector(" #removeText").value,
+        json = {index: input};
+        body = JSON.stringify( json );
+  
+  const response = await fetch("/delete", {
+    method:"DELETE",
+    headers: {"Content-Type": "application/json"},
+    body
+  });
+
+  //const updated = await response.json();
+  //alert(updated);
+
+  fetchArray();
+}
+
+const changeFunction = async function (event){
+  
+  const input = document.getElementById("changeText").value; // e.g. "2 Yellow"
+  const [row, color] = input.split(" ");
+  const body = JSON.stringify({ row: parseInt(row), color });
+
+  await fetch("/patch", {
+    method: "PATCH",
+    headers: {"Content-Type": "application/json"},
+    body
+  });
+
+  
+
+  fetchArray();
+}
+
+window.onload = function() { //when page is done loading, we'll run this function
+  const button = document.querySelector("button"); 
+  button.onclick = submit; //when button is clicked, run async function submit (above)
+
+  const removeButton = document.getElementById("removeButton");
+  removeButton.onclick = deleteFunction;
+
+  const changeButton = document.getElementById("changeButton");
+  changeButton.onclick = changeFunction;
+}
+
+const fetchArray = async function (event){
+  const response = await fetch("/data", {
+    method:"GET",
   })
 
-  const text = await response.text()
+  const data = await response.json();
 
-  console.log( "text:", text )
+  //Finds the existing table and makes it blank 
+  const existingTable = document.getElementById('table');
+  existingTable.innerHTML = "";
+
+  var table = document.createElement("table");
+  
+  let y = "";
+
+  y += "<tr class='firstRow'><th>Model</th><th>Color</th><th>Year</th><th>Age</th>";
+  for (var i = 0; i < data.length; i++){
+    y += "<tr>";
+    y += "<td>" + data[i].model + "</td>";
+    y += "<td>" + data[i].color + "</td>";
+    y += "<td>" + data[i].year + "</td>";
+    y += "<td>" + data[i].age + "</td>";
+   // let age = 2025 - (data[i].year).value; 
+
+    //y += "<td>" + age + "</td>";
+    y += "</tr>";
+  }
+
+  table.innerHTML = y;
+
+  document.getElementById("table").append(table);
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
-}
+
