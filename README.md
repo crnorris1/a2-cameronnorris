@@ -8,13 +8,6 @@ Simply follow the instructions on the page to log a guitar, remove one, or chang
 The age of a guitar will automatically display once a guitar is logged with a valid manufacture date.
 #Assignment 2 - Short Stack Implementation - Cameron Norris
 
-Cameron Norris
-https://a2-cameronnorris.onrender.com/
-
-This web page contains a guitar database system where the user is able to add, remove and alter different guitars.
-Simply follow the instructions on the page to log a guitar, remove one, or change the color of the guitar.
-The age of a guitar will automatically display once a guitar is logged with a valid manufacture date.
-
 ## Technical Achievements
 - **Tech Achievement 1**: The website is formatted in one single page that shows the current state of the server-side data.
 - **Tech Achievement 2**: When the user submits data, it is automatically updated into the table. Same goes for when the user alters or deletes data.
