@@ -28,3 +28,8 @@ The age of a guitar will automatically display once a guitar is logged with a va
 3. class selectors (like .flexbox)
 - **Design Achievement 3** I used used flexbox to style the button and enter box
 - **Design Achievement 4** I used Google Fonts like Raleway and Grenze Gotisch
+
+
+### AI use:
+I used ChatGPT primarily in the beginning of the assignment to help me understand how the front end and backend js files talk to each other. It helped me understand the server file's limitations and why things like appdata had to be send to main and not just accessed as a variable. 
+I also used it to explain to me how formatting an array for HTML use worked, as I did not understand why it could not be placed with a simple innerHTML line.

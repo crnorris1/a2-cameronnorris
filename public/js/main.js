@@ -54,11 +54,11 @@ const deleteFunction = async function( event ){
 
 const changeFunction = async function (event){
   
-  const input = document.getElementById("changeText").value; // e.g. "2 Yellow"
-  const [row, color] = input.split(" ");
-  const body = JSON.stringify({ row: parseInt(row), color });
+  const input = document.getElementById("changeText").value, //text from change color input box
+        [row, color] = input.split(" "); //split the input on the space character, divide into row and color
+        body = JSON.stringify({ row: parseInt(row), color });
 
-  await fetch("/patch", {
+  await fetch("/patch", { //patch request 
     method: "PATCH",
     headers: {"Content-Type": "application/json"},
     body
@@ -87,7 +87,7 @@ const fetchArray = async function (event){
 
   const data = await response.json();
 
-  //Finds the existing table and makes it blank 
+  //finds the existing table and makes it blank 
   const existingTable = document.getElementById('table');
   existingTable.innerHTML = "";
 
@@ -96,6 +96,7 @@ const fetchArray = async function (event){
   let y = "";
 
   y += "<tr class='firstRow'><th>Model</th><th>Color</th><th>Year</th><th>Age</th>";
+  //converts data array into table format
   for (var i = 0; i < data.length; i++){
     y += "<tr>";
     y += "<td>" + data[i].model + "</td>";
